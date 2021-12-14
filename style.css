@@ -4,12 +4,17 @@ body{
 }
 
 button {
-    width: 150px;
-    height: 75px;
+    width: 200px;
+    height: 200px;
     font-size: 25px;
     border-radius: 20px; 
     color: black;
     background-color: rgb(225, 225, 225);
+}
+
+img {
+    width: 180px;
+    height: 180px;
 }
 
 button:hover {
