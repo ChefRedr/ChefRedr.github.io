@@ -1,0 +1,20 @@
+body{
+    background-color: rgb(255, 236, 206);
+}
+
+button {
+    width: 150px;
+    height: 75px;
+    font-size: 25px;
+    border-radius: 20px; 
+    color: black;
+    background-color: rgb(225, 225, 225);
+    position: fixed;
+    right: 45%;
+}
+
+button:hover {
+    transition: .5s;
+    background-color: rgb(180, 180, 180);
+    color: black;
+}
