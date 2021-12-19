@@ -28,7 +28,7 @@ const DEFAULT_ROWS = rowSlider.value;
 let settings = {
     rows: DEFAULT_ROWS,
     unitSize: CANVAS_SIZE/DEFAULT_ROWS,
-    updatesPerSecond: 2,
+    updatesPerSecond: timeSlider.value,
 }
 
 // Update the current slider value (each time you drag the slider handle)
