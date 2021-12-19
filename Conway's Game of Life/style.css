@@ -1,0 +1,25 @@
+html {
+    background-color: rgb(245, 250, 225);
+}
+
+input[type="range"] {
+    width: 425px;
+}
+
+canvas {
+    cursor: pointer;
+}
+
+.title {
+    font-family: Arial;
+    font-size: 30px;
+}
+
+.text {
+    font-family: Arial;
+    font-size: 20px;
+}
+
+#start-button {
+    width: 500px;
+}
