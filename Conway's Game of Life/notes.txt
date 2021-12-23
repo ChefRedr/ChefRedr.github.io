@@ -1,3 +1,0 @@
-Edit number of rows
-Edit time interval in game loop
-Change color of block

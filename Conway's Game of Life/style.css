@@ -10,6 +10,10 @@ canvas {
     cursor: pointer;
 }
 
+button {
+    cursor: pointer;
+}
+
 .title {
     font-family: Arial;
     font-size: 30px;
