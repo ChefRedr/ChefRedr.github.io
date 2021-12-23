@@ -62,7 +62,7 @@ let isDirectionQueued = false;
 let nextDirection = null;
 
 document.addEventListener("keydown", (event)=>{
-    if(event.key == 'ArrowUp' && !(direction == 'D')) {
+    if(event.key == 'ArrowUp' && direction != 'D') {
         keys[event.key] = true;
         if(!isDirectionQueued) {
             direction = 'U';
@@ -72,7 +72,7 @@ document.addEventListener("keydown", (event)=>{
             nextDirection = 'U';
         }
     }
-    if(event.key == 'ArrowDown' && !(direction == 'U')) {
+    if(event.key == 'ArrowDown' && direction != 'U') {
         keys[event.key] = true;
         if(!isDirectionQueued) {
             direction = 'D';
@@ -82,7 +82,7 @@ document.addEventListener("keydown", (event)=>{
             nextDirection = 'D';
         }
     }
-    if(event.key == 'ArrowLeft' && !(direction == 'R')) {
+    if(event.key == 'ArrowLeft' && direction != 'R') {
         keys[event.key] = true;
         if(!isDirectionQueued) {
             direction = 'L';
@@ -92,7 +92,7 @@ document.addEventListener("keydown", (event)=>{
             nextDirection = 'L';
         }
     }
-    if(event.key == 'ArrowRight' && !(direction == 'L')) {
+    if(event.key == 'ArrowRight' && direction != 'L') {
         keys[event.key] = true;
         if(!isDirectionQueued) {
             direction = 'R';
