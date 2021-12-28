@@ -111,6 +111,15 @@ document.addEventListener("keyup", (event)=>{
     }
 })
 
+//Prevents screen from scrolling when using up and down arrow keys
+document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    let keyCode = evt.keyCode;
+    if (keyCode >= 37 && keyCode <= 40) {
+        return false;
+    }
+};
+
 function moveSnake() {
     for(let i = snake.length - 1; i > 0; --i) {
         snake[i].x = snake[i-1].x;
