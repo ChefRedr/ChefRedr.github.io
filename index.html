@@ -9,25 +9,28 @@
     </head>
     <body>
         <header id="main-header">
-            <div class="container">
-                <h1>Home</h1>
-            </div>
+            <nav id="navbar">
+                <span class="logo"><img src="images/chef.png"></span>
+                <a class="nav-selections" href="index.html">Home</a>
+                <a class="nav-selections" href="news.html">News</a>
+            </nav>
         </header>
-        <nav id="navbar">
-            <div class="container">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="news.html">News</a></li>
-                </ul>
+        <div id="games-container">
+            <a class="game" href="Conway's Game of Life/index.html">
+                <img class="game-icon" src="Conway's Game of Life/images/logo.png">
+                <p class="game-name">Conway's Game of Life</p>
+            </a>
+            <a class="game" href="Snake/index.html">
+                <img class="game-icon" src="Snake/images/logo.png">
+                <p class="game-name">Snake</p>
+            </a>
+            <div>
+                <span class="game" id="error-button">
+                    <img class="game-icon" src="images/error.png">
+                    <p class="game-name">Error 404</p>
+                </span>
             </div>
-        </nav>
-        <br>
-        <div class="container">
-            <h2>Games</h2>
-            <ul class="games">
-                <a href="Conway's Game of Life/index.html"><li class="game"><img src="Conway's Game of Life/images/logo.png" alt="logo.png"><br>Conway's Game of Life</li></a>
-                <a href="Snake/index.html"><li class="game"><img src="Snake/images/logo.png" alt="logo.png"><br>Snake</li></a>
-            </ul>
         </div>
+        <script src="script.js"></script>
     </body>
 </html>
