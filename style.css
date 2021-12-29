@@ -28,11 +28,11 @@ img {
     background-color: rgba(161, 241, 252, 0.4);
 }
 
-#navbar .logo {
+#navbar #logo {
     transition: ease-in-out .5s;
 }
 
-#navbar .logo:hover {
+#navbar #logo:hover {
     cursor: pointer;
 }
 

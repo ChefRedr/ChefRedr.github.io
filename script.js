@@ -1,4 +1,4 @@
-let hat = document.querySelector(".logo");
+let hat = document.getElementById("logo");
 let angle = 0;
 let style;
 
