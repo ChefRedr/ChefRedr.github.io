@@ -1,0 +1,81 @@
+.back-button {
+    font-size: 20px;
+    cursor: pointer;
+    width: fit-content;
+    margin: auto;
+    padding: 1%;
+    background-color: transparent;
+    transition: .10s;
+}
+
+.back-button:hover {
+    background-color: lightcoral;
+    color: white;
+}
+
+#shop-menu {
+    display: none; /* Changes to grid when it's shown */
+    /* grid-template-columns: repeat(2, 1fr); */ /* Add back when adding upgrades */
+}
+
+#shop-menu #worker-menu {
+    display: flex;
+    flex-direction: column;
+    /* border-right: 8px dashed black; */ /* Add back when adding upgrades */
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+#shop-menu #worker-menu h1 {
+    text-align: center;
+}
+
+#shop-menu #worker-menu .worker {
+    display: flex;
+    cursor: pointer;
+    border-radius: 1em;
+    margin-left: 2%;
+}
+
+#shop-menu #worker-menu .worker .worker-img {
+    width: 100px;
+}
+
+#shop-menu #worker-menu .worker-description {
+    align-self: center;
+    color: black;
+    font-size: 25px;
+}
+
+#shop-menu #worker-menu .amount-owned { 
+    border-radius: 0.4em;
+    align-self: center;
+    margin-left: auto;
+    margin-right: 1%;
+    color: black;
+    font-size: 25px;
+}
+
+#shop-menu #worker-menu .worker:hover {
+    background-color: rgba(161, 241, 252, 0.5);
+}
+
+#burger-skins-menu {
+    display: none;
+    background-color: yellow;
+}
+
+#player-stats-menu {
+    display: none;
+    background-color: green;
+}
+
+#achievements-menu {
+    display: none;
+    background-color: blue;
+}
+
+#settings-menu {
+    display: none;
+    background-color: purple;
+}

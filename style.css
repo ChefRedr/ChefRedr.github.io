@@ -101,6 +101,7 @@ a {
     margin: auto;
     padding: 2%;
     border: 3px solid black;
+    background-color: white;
     border-radius: 1em;
 }
 
@@ -109,6 +110,6 @@ a {
 }
 
 .news-container a:hover {
-    transition: .25s;
-    color: rgba(255, 255, 255, 0.9);
+    transition: .10s;
+    color: Red;
 }
