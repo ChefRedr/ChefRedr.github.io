@@ -113,11 +113,11 @@ document.addEventListener("mousemove", (e) => {
 
 function clickBox() {
     gameRunning = false;
+    startButton.innerHTML = "Start";
     let row = Math.floor(mouse.y/settings.unitSize);
     let column = Math.floor(mouse.x/settings.unitSize);
     if(map[row][column] == 0) { map[row][column] = 1; }
     else { map[row][column] = 0; }
-    startButton.innerHTML = "Start";
     drawBoard();
 }
 
@@ -163,11 +163,16 @@ function getNeighbors(row, column, arr) {
 }
 
 let startButton = document.getElementById("start-button");
+let stepButton = document.getElementById("step-button");
 
 startButton.onclick = () => {
     gameRunning = !gameRunning;
     if(gameRunning) { startButton.innerHTML = "Pause"; }
     if(!gameRunning) { startButton.innerHTML = "Start"; }
+}
+
+stepButton.onclick = () => {
+    lifeCycle();
 }
 
 let timeInterval = window.setInterval(()=>{

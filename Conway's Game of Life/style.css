@@ -12,6 +12,7 @@ canvas {
 
 button {
     cursor: pointer;
+    margin-bottom: 0.25%;
 }
 
 .title {
@@ -24,6 +25,6 @@ button {
     font-size: 20px;
 }
 
-#start-button {
+button {
     width: 500px;
 }
