@@ -4,7 +4,7 @@ const CANVAS_SIZE = 500;
 canvas.width = CANVAS_SIZE;
 canvas.height = CANVAS_SIZE;
 
-let c = canvas.getContext('2d');
+let ctx = canvas.getContext('2d');
 
 let rows = 20;
 let unitSize = CANVAS_SIZE/rows;
@@ -12,17 +12,23 @@ let updatesPerSecond = 10;
 let gameRunning = true;
 
 function drawLine(x1, y1, x2, y2) {
-    c.beginPath();
-    c.moveTo(x1, y1);
-    c.lineTo(x2, y2);
-    c.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
 }
 
-function clearCanvas() { c.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE); }
+function fillCircle(x, y, radius) {
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, Math.PI*2, false);
+    ctx.fill();
+}
+
+function clearCanvas() { ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE); }
 
 function drawBoard() {
-    c.fillStyle = "black";
-    c.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 }
 
 function SnakePart(x, y) {
@@ -47,13 +53,13 @@ initializeSnake();
 
 function drawSnake() {
     for(let i = 0; i < snake.length; ++i) {
-        if(i == 0) { c.fillStyle = "rgb(0, 196, 0)"; }
-        else { c.fillStyle = "rgb(0, 255, 0)"; }
-        c.fillRect(snake[i].x, snake[i].y, unitSize, unitSize);
+        if(i == 0) { ctx.fillStyle = "rgb(0, 196, 0)"; }
+        else { ctx.fillStyle = "rgb(0, 255, 0)"; }
+        ctx.fillRect(snake[i].x, snake[i].y, unitSize, unitSize);
     }
 }
 
-c.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
+ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE)
 drawSnake();
 drawBoard();
 
@@ -164,8 +170,8 @@ function spawnApple() {
 }
 
 function drawApple() {
-    c.fillStyle = "red";
-    c.fillRect(apple.x, apple.y, unitSize, unitSize);
+    ctx.fillStyle = "red";
+    fillCircle(apple.x + unitSize/2, apple.y + unitSize/2, unitSize/2);
 }
 
 function isAppleEaten() {
