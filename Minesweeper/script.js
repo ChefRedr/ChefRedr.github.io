@@ -2,7 +2,6 @@ const FPS = 60;
 let timeInterval;
 
 let canvas = document.getElementById("canvas");
-canvas.oncontextmenu = ()=>{ return false; }
 const ctx = canvas.getContext('2d');
 const UNIT_SIZE = 16;
 
@@ -41,7 +40,6 @@ let tiles = {
 let mouse = {
     x: 0,
     y: 0,
-    leftDown: false
 };
 
 function getMousePosition(canvas, event) {
@@ -57,28 +55,23 @@ document.addEventListener("mousemove", (e) => {
     document.getElementById("mouse-cords").innerHTML = `X:${Math.floor(mouse.x)}, Y:${Math.floor(mouse.y)}`;
 });
 
-class BoardTile {
-    constructor(isBomb = false, neighboringBombs = null) {
-        this.isBomb = isBomb;
-        this.neighboringBombs = neighboringBombs;
-        this.isFlagged = false;
-        this.isQuestionMarked = false;
-        this.isPressed = false;
-        this.active = false;
-    }
+function BoardTile(isBomb = false, neighboringBombs = null, isFlagged = false, isQuestionMarked = false, isPressed = false) {
+    this.isBomb = isBomb;
+    this.neighboringBombs = neighboringBombs;
+    this.isFlagged = isFlagged;
+    this.isQuestionMarked = isQuestionMarked;
+    this.isPressed = isPressed;
 }
 
 class Board {
     constructor(rows, columns, numberOfBombs) {
-        //Set rows and columns
-            if(rows <= 0) { this.rows = 1; } else { this.rows = rows; }
-            if(columns < 8) { this.columns = 8; } else { this.columns = columns; }
-        //Set number of bombs
-            if(numberOfBombs >= this.rows*this.columns) { this.numberOfBombs = this.rows*this.columns - 1; }
-            else if(numberOfBombs < 0) { this.numberOfBombs = 0; }
-            else { this.numberOfBombs = numberOfBombs; }
+        if(rows <= 0) { this.rows = 1; }
+        else { this.rows = rows; }
+        if(columns < 8) { this.columns = 8; }
+        else { this.columns = columns; }
+        if(numberOfBombs >= this.rows*this.columns) { this.numberOfBombs = this.rows*this.columns - 1; }
+        else { this.numberOfBombs = numberOfBombs; }
         this.board = [];
-        this.currentlyActiveTile = null;
         this.gameStarted = false;
         this.gameRunning = false;
         this.stopwatch = 0;
@@ -145,13 +138,11 @@ class Board {
         }
     }
     drawBoard() {
-        ctx.clearRect(canvas.x, canvas.y, canvas.width, canvas.height);
         for(let r = 0; r < this.board.length; ++r) {
             for(let c = 0; c < this.board[r].length; ++c) {
                 if(!this.board[r][c].isPressed) {
                     if(this.board[r][c].isFlagged) { drawImage(tiles.FLAGGED_TILE, c*UNIT_SIZE, r*UNIT_SIZE); }
                     else if(this.board[r][c].isQuestionMarked) { drawImage(tiles.QUESTION_TILE, c*UNIT_SIZE, r*UNIT_SIZE); }
-                    else if(this.board[r][c].isQuestionMarked && this.board[r][c].active) { drawImage(tiles.PRESSED_QUESTION_TILE, c*UNIT_SIZE, r*UNIT_SIZE); }
                     else { drawImage(tiles.UNPRESSED_TILE, c*UNIT_SIZE, r*UNIT_SIZE); }
                 }
                 else if(this.board[r][c].isPressed) {
@@ -162,10 +153,10 @@ class Board {
             }
         }
     }
-    tilePress(row, column) {
+    tilePress() {
         
     }
-    tileRightPress(row, column) {
+    tileRightPress() {
         
     }
     startGame() {
@@ -175,19 +166,6 @@ class Board {
         this.assignNumbers();   //Rework this
         this.drawBoard();
 
-        canvas.addEventListener('mousedown', (event)=>{
-            if(event.button == 0) {
-                console.log("Left Down");
-                mouse.leftDown = true;
-            }
-        });
-        
-        canvas.addEventListener('mouseup', (event)=>{
-            if(event.button == 0) {
-                console.log("Left Up");
-                mouse.leftDown = false;
-            }
-        });
         //Rewrite this
 
         // canvas.onclick = ()=>{
@@ -203,22 +181,7 @@ class Board {
         //     }
         // }
     }
-    gameLoop() {
-        if(mouse.leftDown) {
-            if(!this.currentlyActiveTile == null) { this.currentlyActiveTile.active = false; }
-            this.currentlyActiveTile = this.board[Math.floor(mouse.y/UNIT_SIZE), Math.floor(mouse.x/UNIT_SIZE)];
-            this.currentlyActiveTile.active = true;
-        }
-        else {
-            if(!this.currentlyActiveTile == null) { this.currentlyActiveTile.active = false; }
-            this.currentlyActiveTile = null;
-        }
-    }
 }
 
 minesweeperBoard = new Board(16, 16, 40);
 minesweeperBoard.startGame();
-
-window.setInterval(()=>{
-    minesweeperBoard.gameLoop();
-}, 1000/FPS);
