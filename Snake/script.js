@@ -9,7 +9,7 @@ let ctx = canvas.getContext('2d');
 let rows = 20;
 let unitSize = CANVAS_SIZE/rows;
 let updatesPerSecond = 10;
-let gameRunning = true;
+let gameRunning = false;
 
 function drawLine(x1, y1, x2, y2) {
     ctx.beginPath();
@@ -24,7 +24,43 @@ function fillCircle(x, y, radius) {
     ctx.fill();
 }
 
-function clearCanvas() { ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE); }
+function drawSnakeBody(snakePart) {
+    // ctx.fillStyle = "rgb(255, 255, 255)";
+    // ctx.fillRect(snakePart.x, snakePart.y, unitSize, unitSize);
+    ctx.strokeStyle = "rgb(0, 196, 9)";
+    let x1 = snakePart.x + unitSize/2;
+    let y1 = snakePart.y + unitSize/2;
+    let x2;
+    let y2;
+    ctx.lineWidth = 1;
+    switch(snakePart.direction) {
+        case 'U':
+            y2 = y1 - unitSize; x2 = x1;
+            break;
+        case 'D':
+            y2 = y1 + unitSize; x2 = x1;
+            break;
+        case 'L':
+            x2 = x1 + unitSize; y2 = y1;
+            break;
+        case 'R':
+            x2 = x1 - unitSize; y2 = y1;
+            break;
+    }
+    drawLine(x1, y1, x2, y2);
+}
+
+function drawGridLines() {
+    for(let i = 0; i < rows; ++i) {
+        ctx.strokeStyle = "white";
+        drawLine(0, i*unitSize, CANVAS_SIZE, i*unitSize);
+        drawLine(i*unitSize, 0, i*unitSize, CANVAS_SIZE);
+    }
+}
+
+function clearCanvas() {
+    ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+}
 
 function drawBoard() {
     ctx.fillStyle = "black";
@@ -34,6 +70,7 @@ function drawBoard() {
 function SnakePart(x, y) {
     this.x = x;
     this.y = y;
+    this.direction = null;
 }
 
 let startingSnakeLength = 6;
@@ -53,9 +90,7 @@ initializeSnake();
 
 function drawSnake() {
     for(let i = 0; i < snake.length; ++i) {
-        if(i == 0) { ctx.fillStyle = "rgb(0, 196, 0)"; }
-        else { ctx.fillStyle = "rgb(0, 255, 0)"; }
-        ctx.fillRect(snake[i].x, snake[i].y, unitSize, unitSize);
+        drawSnakeBody(snake[i]);
     }
 }
 
@@ -108,7 +143,7 @@ document.addEventListener("keydown", (event)=>{
             nextDirection = 'R';
         }
     }
-    if(event.key == 'R' || event.key == 'r') { restart(); }
+    if(event.key == 'R' || event.key == 'r') { restart(); document.getElementById("start-button").innerHTML = "Restart"; }
 })
 
 document.addEventListener("keyup", (event)=>{
@@ -127,9 +162,11 @@ document.onkeydown = function(evt) {
 };
 
 function moveSnake() {
+    snake[0].direction = direction;
     for(let i = snake.length - 1; i > 0; --i) {
         snake[i].x = snake[i-1].x;
         snake[i].y = snake[i-1].y;
+        snake[i].direction = snake[i-1].direction;
     }
     switch(direction) {
         case 'U':
@@ -216,6 +253,13 @@ function restart() {
     gameRunning = true;
 }
 
+document.getElementById("start-button").onclick = ()=>{
+    document.getElementById("start-button").innerHTML = "Restart";
+    restart();
+};
+
+drawGridLines();
+
 window.setInterval(()=>{
     if(gameRunning) {
         moveSnake();
@@ -234,9 +278,10 @@ window.setInterval(()=>{
             ++snakeLength;
             snake.push(new SnakePart());
         }
-        clearCanvas()
+        clearCanvas();
         drawBoard();
         drawApple();
         drawSnake();
+        drawGridLines();
     }
 }, 1000/updatesPerSecond)
