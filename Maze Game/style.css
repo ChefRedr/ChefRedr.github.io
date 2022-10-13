@@ -1,0 +1,46 @@
+* {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+img {
+    /* Prevents bluriness when rescaling an image */
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+
+    /* Prevents dragging ghost images */
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+}
+
+#inventory {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-left: 5px;
+    gap: 5px;
+    /* visibility: hidden; */
+}
+
+.container {
+    background-color: rgb(196, 196, 196);
+    border-radius: 0.5em;
+    opacity: 0.75;
+}
+
+#keys-container .key {
+    margin: 0.5em;
+    width: 53.3px;
+    height: 30px;
+}
+
+#cards-container .card {
+    margin: 0.5em;
+    width: 30px;
+    height: 53.3px;
+}
