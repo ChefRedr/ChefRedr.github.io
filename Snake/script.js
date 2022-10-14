@@ -3,6 +3,8 @@ let canvas = document.getElementById("canvas");
 const CANVAS_SIZE = 500;
 canvas.width = CANVAS_SIZE;
 canvas.height = CANVAS_SIZE;
+// canvas.width = window.screen.width;
+// canvas.height = window.screen.height;
 
 let ctx = canvas.getContext('2d');
 
@@ -25,8 +27,8 @@ function fillCircle(x, y, radius) {
 }
 
 function drawSnakeBody(snakePart) {
-    // ctx.fillStyle = "rgb(255, 255, 255)";
-    // ctx.fillRect(snakePart.x, snakePart.y, unitSize, unitSize);
+    ctx.fillStyle = "rgb(0, 255, 0)";
+    ctx.fillRect(snakePart.x, snakePart.y, unitSize, unitSize);
     ctx.strokeStyle = "rgb(0, 196, 9)";
     let x1 = snakePart.x + unitSize/2;
     let y1 = snakePart.y + unitSize/2;
@@ -47,7 +49,7 @@ function drawSnakeBody(snakePart) {
             x2 = x1 - unitSize; y2 = y1;
             break;
     }
-    drawLine(x1, y1, x2, y2);
+    // drawLine(x1, y1, x2, y2);
 }
 
 function drawGridLines() {
