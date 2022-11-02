@@ -176,6 +176,8 @@ function checkCollision(rectX, rectY) {
 }
 
 window.setInterval(()=>{
+    canvas.width = window.screen.width;
+    canvas.height = window.screen.height;
     updateCameraView();
     drawMap();
     player.update();
