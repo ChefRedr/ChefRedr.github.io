@@ -4,8 +4,11 @@ function colliding(shape1, shape2) {
     }
 }
 
+const DEFAULT_SIZE = 25;
+const DEFAULT_COLOR = "black";
+
 class Entity {
-    constructor(x, y, size, color="black") {
+    constructor(x, y, size=DEFAULT_SIZE, color=DEFAULT_COLOR) {
         this.type = "entity";
         this.x = x;
         this.y = y;
@@ -21,7 +24,7 @@ class Entity {
 }
 
 class Player extends Entity {
-    constructor(x, y, size, color) {
+    constructor(x, y, size=DEFAULT_SIZE, color=DEFAULT_COLOR) {
         super(x, y, size, color);
         this.type = "player";
         this.absoluteX = this.x - camera.x;
@@ -66,19 +69,19 @@ class Player extends Entity {
 }
 
 class Bullet extends Entity {
-    constructor(x, y, size=5, color) {
+    constructor(x, y, size=5, color=DEFAULT_COLOR) {
         super(x, y, size, color);
         this.type = "bullet";
-        this.power = 5;
+        let power = 5;
         let angle = Math.atan2(player.absoluteY - mouse.y, mouse.x - player.absoluteX);
-        this.xVelocity = Math.cos(angle) * this.power;
-        this.yVelocity = -Math.sin(angle) * this.power;
+        this.xVelocity = Math.cos(angle) * power;
+        this.yVelocity = -Math.sin(angle) * power;
         this.speed = 3;
     }
     checkCollisions(entities) {
         for(let i = 0; i < entities.length; ++i) {
-            // alert(`${entities[i].type}, ${colliding(this, entities[i])}`);
-            if(entities[i].type = "enemy" && colliding(this, entities[i])) {
+            console.log(entities[i].type);
+            if(entities[i].type == "enemy" && colliding(this, entities[i])) {
                 entities[i].color = "red";
             }
         }
