@@ -1,1 +1,0 @@
-Every entity should have canBeDeleted variable to delete it from the entities array

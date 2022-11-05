@@ -12,6 +12,11 @@ function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+function strokeRect(x, y, width, height, color, camera={x:0, y:0}) {
+    ctx.fillStyle = color;
+    ctx.strokeRect(Math.round(x - camera.x), Math.round(y - camera.y), width, height);
+}
+
 function fillRect(x, y, width, height, color, camera={x:0, y:0}) {
     ctx.fillStyle = color;
     ctx.fillRect(Math.round(x - camera.x), Math.round(y - camera.y), width, height);
@@ -27,6 +32,7 @@ function fillCircle(x, y, radius, color, camera={x:0, y:0}) {
 //Mouse stuff
 
 let mouse = {x:0, y:0};
+
 function getMosuePosition(canvas, event) {
     let rect = canvas.getBoundingClientRect();
     return {
@@ -34,6 +40,7 @@ function getMosuePosition(canvas, event) {
         y: event.clientY - rect.y,
     };
 }
+
 document.addEventListener("mousemove", (event)=>{
     mouse = getMosuePosition(canvas, event);
 });
@@ -41,25 +48,37 @@ document.addEventListener("mousemove", (event)=>{
 //Keyboard input
 
 let keys = [];
+
 document.addEventListener("keydown", (event)=>{
     keys[event.key] = true;
 });
+
 document.addEventListener("keyup", (event)=>{
     keys[event.key] = false;
 });
 
 //==========================================
-let player = new Player(0, 0, 25, "black");
-
 let entities = [];
 
+let player = new Player(0, 0);
 entities.push(player);
 
 window.addEventListener("click", ()=>{
     entities.push(new Bullet(player.handX, player.handY));
 });
 
-entities.push(new Enemy(-100, -100, 50, "green", "zombie"));
+for(let i = 0; i < 25; ++i){
+    let x = Math.floor(Math.random()*500 - 250);
+    let y = Math.floor(Math.random()*500 - 250);
+    let enemy = new Enemy(x, y, 25, 25, "green", "zombie");
+    let count = 0;
+    for(let j = 0; j < entities.length; ++j) {
+        if(!isColliding(enemy, entities[j])) {++count;}
+    }
+    if(count == entities.length) {entities.push(enemy);}
+    else {--i;}
+}
+
 //==========================================
 
 function updateCamera() {
@@ -67,20 +86,27 @@ function updateCamera() {
     camera.y = player.y - canvas.height/2.5;
 }
 
-const UPS = 250;
+const UPS = 120;
 
 function gameLoop() {
     updateCamera();
     player.update();
+    for(let i = 1; i < entities.length; ++i) {
+        entities[i].update(entities);
+        if(entities[i].canBeDeleted) { entities.splice(i, 1); }
+    }
 }
 
 function renderLoop() {
     clearCanvas();
     for(let i = 0; i < entities.length; ++i) {
-        entities[i].update(entities);
         entities[i].draw(camera);
     }
     window.requestAnimationFrame(renderLoop);
+
+    //Draw health bar
+    fillRect(5, 5, player.health * 2, 25, "red");
+    strokeRect(5, 5, 200, 25, "black");
 }
 
 renderLoop();

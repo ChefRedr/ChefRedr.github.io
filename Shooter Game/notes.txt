@@ -1,0 +1,5 @@
+Every entity should have canBeDeleted variable to delete it from the entities array
+
+added weapons stats gui
+add health
+no spawning on other people
