@@ -3,3 +3,9 @@ Every entity should have canBeDeleted variable to delete it from the entities ar
 added weapons stats gui
 add health
 no spawning on other people
+add bosses
+
+Border System
+
+Wave System:
+Wave 1: 

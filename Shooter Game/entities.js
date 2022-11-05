@@ -37,6 +37,7 @@ class Player extends Entity {
         super(x, y, width, height, color);
         this.type = "player";
         this.health = 100;
+        this.invincibility = false;
         this.absoluteX = this.x - camera.x;
         this.absoluteY = this.y - camera.y;
         this.speed = 0.2;
@@ -45,10 +46,13 @@ class Player extends Entity {
         this.handY = 0;
     }
     isTouchingEnemy() {
+        let hitDelay = 25   ;
         for(let i = 0; i < entities.length; ++i) {
             if(entities[i].type == "enemy" && isColliding(this, entities[i])) {
-                if(this.health > 0) {
+                if(this.health > 0 && !this.invincibility) {
                     --this.health;
+                    this.invincibility = true;
+                    setTimeout(()=>{this.invincibility = false}, hitDelay);
                 }
             }
         }
