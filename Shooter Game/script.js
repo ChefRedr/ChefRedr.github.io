@@ -60,7 +60,7 @@ document.addEventListener("keyup", (event)=>{
 //==========================================
 let entities = [];
 
-let player = new Player(0, 0);
+let player = new Player(2500, 2500);
 entities.push(player);
 
 window.addEventListener("click", ()=>{
@@ -68,8 +68,8 @@ window.addEventListener("click", ()=>{
 });
 
 for(let i = 0; i < 25; ++i){
-    let x = Math.floor(Math.random()*500 - 250);
-    let y = Math.floor(Math.random()*500 - 250);
+    let x = Math.floor(Math.random()*500 + 250);
+    let y = Math.floor(Math.random()*500 + 250);
     let enemy = new Enemy(x, y, 25, 25, "green", "zombie");
     let count = 0;
     for(let j = 0; j < entities.length; ++j) {
@@ -102,11 +102,23 @@ function renderLoop() {
     for(let i = 0; i < entities.length; ++i) {
         entities[i].draw(camera);
     }
-    window.requestAnimationFrame(renderLoop);
+    console.log(player);
+
+    //Draw Map
+    drawMap();
+    drawMiniMap();
+
+    //Draw random block
+    fillRect(0, 0, UNIT_SIZE, UNIT_SIZE, "gray", camera);
 
     //Draw health bar
     fillRect(5, 5, player.health * 2, 25, "red");
     strokeRect(5, 5, 200, 25, "black");
+
+    //Draw events
+    drawEventsBox();
+
+    window.requestAnimationFrame(renderLoop);
 }
 
 renderLoop();

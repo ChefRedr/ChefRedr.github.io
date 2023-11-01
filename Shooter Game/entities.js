@@ -46,7 +46,7 @@ class Player extends Entity {
         this.handY = 0;
     }
     isTouchingEnemy() {
-        let hitDelay = 25   ;
+        let hitDelay = 25; //25 milliseconds
         for(let i = 0; i < entities.length; ++i) {
             if(entities[i].type == "enemy" && isColliding(this, entities[i])) {
                 if(this.health > 0 && !this.invincibility) {
@@ -114,7 +114,8 @@ class Bullet extends Entity {
     update(entities) {
         this.checkCollisions(entities);
         let BOOM = ()=>{this.canBeDeleted = true};
-        setTimeout(BOOM, 300);
+        let despawnTimer = 300; //300 milliseconds
+        setTimeout(BOOM, despawnTimer);
         this.x += this.xVelocity;
         this.y += this.yVelocity;        
     }
@@ -158,8 +159,8 @@ class Enemy extends Entity {
         }
     }
     update() {
-        if(this.x > player.x - player.width/2) {this.xVelocity = this.speed * -1;}
-        else {this.xVelocity = this.speed * 1;}
+        if(this.x > player.x - player.width/2) {this.xVelocity = this.speed * -1;} //moves towards player if to the right of it
+        else {this.xVelocity = this.speed * 1;} //moves towards player if to the left of it
         if(this.y > player.y - player.height/2) {this.yVelocity = this.speed * -1;}
         else {this.yVelocity = this.speed * 1;}
         this.checkCollisions();
