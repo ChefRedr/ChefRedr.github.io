@@ -19,8 +19,6 @@ img {
 #navbar {
     display: flex;
     margin: 1%;
-    padding: 0.5%;
-    justify-content: start;
     justify-content: space-evenly;
     align-items: center;
     border: 3px solid black;
@@ -59,7 +57,7 @@ a:visited {
 }
 
 #navbar a:hover {
-    color: white;
+    color: rgb(255, 255, 255);
 }
 
 #games-container {
