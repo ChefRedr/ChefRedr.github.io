@@ -1,44 +1,30 @@
-* {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    font-family: Arial;
-    user-select: none;
+html {
+    background-color: rgb(220, 220, 250);
 }
 
-#contents {
-    display: grid;
-    grid-template-columns: minmax(100px, 1fr) 9fr;
+input[type="range"] {
+    width: 425px;
 }
 
-#settings {
-    display: flex;
-    flex-direction: column;
-    padding: 5%;
-    border: 1px black solid;
-    background-color: rgb(152, 236, 244);
-}
-
-#settings #run-button {
-    justify-self: flex-start;
-}
-
-#settings button {
-    background-color: white;
-    border-radius: 1em;
-    margin-bottom: 5%;
-}
-
-#settings button:hover {
-    color: white;
-    background-color: black;
+canvas {
     cursor: pointer;
 }
 
-#settings input[type="range"] {
-    width: 90%;
+button {
+    cursor: pointer;
+    margin-bottom: 0.25%;
 }
 
-li {
-    margin-bottom: 5px;
+.title {
+    font-family: Arial;
+    font-size: 30px;
+}
+
+.text {
+    font-family: Arial;
+    font-size: 20px;
+}
+
+button {
+    width: 500px;
 }

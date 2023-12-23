@@ -2,41 +2,28 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="images/logo.png">
         <link rel="stylesheet" href="style.css">
-        <title>CGOL</title>
+        <title>Conway's Game of Life</title>
     </head>
     <body>
-        <div id="contents">
-            <div id="settings">
-                <button id="run-button">Run</button>
-                <button id="step-button">Step</button>
-                <button id="clear-button">Clear</button>
-                <button id="randomize-button">Randomize</button>
-                <div>
-                    <span id="ups-number">Updates Per Second: 100</span>
-                    <input type="range" min="1" max="60" id="ups-slider">
-                </div>
-                <div>
-                    <span id="brush-size-number">Brush Size: 30</span>
-                    <input type="range" min="1" max="10" id="brush-size-slider">
-                </div>
-                <p>
-                    <u>Rules</u>
-                    <ul>
-                        <li>Any live cell with less than 2 neighbors dies</li>
-                        <li>Any live cell with 2 or 3 neighbors lives on</li>
-                        <li>Any live cell with more than 3 neighbors dies</li>
-                        <li>Any dead cell with exactly 3 neighbors becomes live</li>
-
-                    </ul>
-                </p>
-                <!-- <p id="x"></p>
-                <p id="y"></p>
-                <p id="row"></p>
-                <p id="column"></p> -->
-            </div>
-            <canvas id="canvas"></canvas>
+        <h1 class="title">Conway's Game of Life (<a href="../index.html"><small>back</small></a>)</h1>
+        <canvas id="canvas" onmousedown="return false" onclick="clickBox()"></canvas>
+        <br>
+        <button class="text" id="start-button">Start</button>
+        <br>
+        <button class="text" id="step-button">Step</button>
+        <br>
+        <span class="text" id="array"></span>
+        <br>
+        <div>
+            <input type="range" min="1" max="100" value="20" step="1" id="row-slider">
+            <span id="row-number" class="text"></span>
+        </div>
+        <div>
+            <input type="range" min="1" max="60" value="1" step="1" id="time-slider">
+            <span id="time-number" class="text"></span>
         </div>
         <script src="script.js"></script>
     </body>
