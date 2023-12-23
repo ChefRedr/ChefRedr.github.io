@@ -6,7 +6,7 @@
 body {
     background-color: rgb(220, 220, 250);
     font-family: Arial, Helvetica, sans-serif;
-    line-height: 1.5em;
+    line-height: normal;
 }
 
 /* Prevents bluriness when rescaling an image */
