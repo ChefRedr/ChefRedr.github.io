@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="images/logo.png">
+        <link rel="stylesheet" href="style.css">
+        <title>Conway's Game of Life</title>
+    </head>
+    <body>
+        <h1 class="title">Conway's Game of Life (<a href="../index.html"><small>back</small></a>)</h1>
+        <canvas id="canvas" onmousedown="return false" onclick="clickBox()"></canvas>
+        <br>
+        <button class="text" id="start-button">Start</button>
+        <br>
+        <button class="text" id="step-button">Step</button>
+        <br>
+        <span class="text" id="array"></span>
+        <br>
+        <div>
+            <input type="range" min="1" max="100" value="20" step="1" id="row-slider">
+            <span id="row-number" class="text"></span>
+        </div>
+        <div>
+            <input type="range" min="1" max="60" value="1" step="1" id="time-slider">
+            <span id="time-number" class="text"></span>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>

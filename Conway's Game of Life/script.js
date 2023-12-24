@@ -1,182 +1,189 @@
+"use strict";
+
 let canvas = document.getElementById("canvas");
 
-const CANVAS_SIZE = 500;
-canvas.width = CANVAS_SIZE;
-canvas.height = CANVAS_SIZE;
+canvas.width = window.screen.width;
+canvas.height = window.screen.height;
 
-let c = canvas.getContext('2d');
+const ctx = canvas.getContext('2d');
 
-const drawLine = (x1, y1, x2, y2) => {
-    c.beginPath();
-    c.moveTo(x1, y1);
-    c.lineTo(x2, y2);
-    c.stroke();
-}
-
-let gameRunning = false;
-
-let rowSlider = document.getElementById("row-slider");
-let rowOutput = document.getElementById("row-number");
-rowOutput.innerHTML = "Rows: "+rowSlider.value;
-
-let timeSlider = document.getElementById("time-slider");
-let timeOutput = document.getElementById("time-number");
-timeOutput.innerHTML = "Updates per Second: "+timeSlider.value;
-
-const DEFAULT_ROWS = rowSlider.value;
+const UNIT_SIZE = 10;
 
 let settings = {
-    rows: DEFAULT_ROWS,
-    unitSize: CANVAS_SIZE/DEFAULT_ROWS,
-    updatesPerSecond: timeSlider.value,
-}
-
-// Update the current slider value (each time you drag the slider handle)
-rowSlider.oninput = () => {
-    gameRunning = false;
-    rowOutput.innerHTML = "Rows: "+rowSlider.value;
-    setMap(rowSlider.value);
-    settings.rows = rowSlider.value;
-    settings.unitSize = CANVAS_SIZE/settings.rows;
-    startButton.innerHTML = "Start";
-    drawBoard();
-}
-
-timeSlider.oninput = () => {
-    timeOutput.innerHTML = "Updates per Second: "+timeSlider.value;
-    settings.updatesPerSecond = timeSlider.value;
-    window.clearInterval(timeInterval);
-    timeInterval = window.setInterval(()=>{
-        if(gameRunning) {
-            lifeCycle();
-        }
-    }, 1000/settings.updatesPerSecond);
-}
-
-let map = [];
-setMap(settings.rows);
-
-//initialize all new boxes with 0
-function setMap(rows) {
-    let newMap = [];
-    for(let i = 0; i < rows; ++i) {
-        newMap.push([]);
-        for(let j = 0; j < rows; ++j) {
-            newMap[i].push(0);
-        }
-    }
-    map = newMap;
-}
-
-const drawBoard = () => {
-    c.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
-    for(i = 0; i < map.length; ++i) {
-        for(j = 0; j < map.length; ++j) {
-            if(map[i][j] == 0) { c.fillStyle = "white"; }
-            else if(map[i][j] == 1) { c.fillStyle = "red"; }
-            c.fillRect(j*settings.unitSize, i*settings.unitSize, settings.unitSize, settings.unitSize);
-        }
-    }
-    c.strokeRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
-    for(let i = 1; i < settings.rows; ++i) {
-        drawLine(0, i*settings.unitSize, CANVAS_SIZE, i*settings.unitSize); //draws horizontal lines
-        drawLine(i*settings.unitSize, 0, i*settings.unitSize, CANVAS_SIZE); //draws vertical lines
-    }
-}
-
-drawBoard();
-
-let array = document.getElementById("array");
-const displayArray = () => {
-    array.innerHTML = "";
-    for(let i = 0; i < map.length; ++i) {
-        array.innerHTML += `${map[i]}<br>`;
-    }
+    gameRunning: false,
+    rows: Math.floor(canvas.height / UNIT_SIZE),
+    columns: Math.floor(canvas.width / UNIT_SIZE),
+    updatesPerSecond: 15,
+    brushSize: 1
 };
 
-let mouse = {
-    x: 0,
-    y: 0,
+function clearCanvas(canvas, context) {
+    context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-function getMousePosition(canvas, event) {
-    let rect = canvas.getBoundingClientRect();
-    return {
-        x: event.clientX - rect.x,
-        y: event.clientY - rect.y,
-    };
+function fillRect(context, x, y, width, height, color) {
+    context.fillStyle = color;
+    context.fillRect(x, y, width, height);
 }
 
-document.addEventListener("mousemove", (e) => {
-    mouse = getMousePosition(canvas, e);
-});
-
-function clickBox() {
-    gameRunning = false;
-    startButton.innerHTML = "Start";
-    let row = Math.floor(mouse.y/settings.unitSize);
-    let column = Math.floor(mouse.x/settings.unitSize);
-    if(map[row][column] == 0) { map[row][column] = 1; }
-    else { map[row][column] = 0; }
-    drawBoard();
-}
-
-function lifeCycle() {
-    let copyMap = [];
-    for(let i = 0; i < map.length; ++i) {
-        copyMap.push([]);
-        for(let j = 0; j < map.length; ++j) {
-            copyMap[i][j] = Number(map[i][j]);
+function setBoard(board) {
+    for(let row = 0; row < settings.rows; ++row) {
+        board.push([]);
+        for(let column = 0; column < settings.columns; ++column) {
+            board[row].push(false);
         }
     }
-    for(let i = 0; i < map.length; ++i) {
-        for(let j = 0; j < map.length; ++j) {
-            let neighbors = getNeighbors(i, j, copyMap);
-            if(copyMap[i][j] == 0) {
-                if(neighbors == 3) { map[i][j] = 1; }
-            }
-            if(copyMap[i][j] == 1) {
-                if(neighbors < 2) { map[i][j] = 0; }
-                if(neighbors > 3) { map[i][j] = 0; }
-            }
-        }
-    }
-    drawBoard();
 }
 
-function getNeighbors(row, column, arr) {
+function getNumberOfNeighbors(board, row, column) {
     let neighbors = 0;
-    let reachedTop = (row-1 == -1);
-    let reachedBottom = (row+1 == arr.length);
-    let reachedLeft = (column-1 == -1);
-    let reachedRight = (column+1 == arr.length);
-
-    if(!reachedTop && !reachedLeft && arr[row-1][column-1] == 1) { ++neighbors; }
-    if(!reachedTop && arr[row-1][column] == 1) { ++neighbors; }
-    if(!reachedTop && !reachedRight && arr[row-1][column+1] == 1) { ++neighbors; }
-    if(!reachedLeft && arr[row][column-1] == 1) { ++neighbors; }
-    if(!reachedRight && arr[row][column+1] == 1) { ++neighbors; }
-    if(!reachedBottom && !reachedLeft && arr[row+1][column-1] == 1) { ++neighbors; }
-    if(!reachedBottom && arr[row+1][column] == 1) { ++neighbors; }
-    if(!reachedBottom && !reachedRight && arr[row+1][column+1] == 1) { ++neighbors; }
+    for(let rowShift = -1; rowShift <= 1; ++rowShift) {
+        for(let columnShift = -1; columnShift <=1; ++columnShift) {
+            if(rowShift == 0 && columnShift == 0) continue;
+            try {
+                if(board[row+rowShift][column+columnShift]) ++neighbors;
+            } catch {}
+        }
+    }
     return neighbors;
 }
 
-let startButton = document.getElementById("start-button");
-let stepButton = document.getElementById("step-button");
-
-startButton.onclick = () => {
-    gameRunning = !gameRunning;
-    if(gameRunning) { startButton.innerHTML = "Pause"; }
-    if(!gameRunning) { startButton.innerHTML = "Start"; }
+function lifeCycle(board) {
+    let oldBoard = JSON.parse(JSON.stringify(board)); //Creates a shallow copy
+    for(let row = 0; row < board.length; ++row) {
+        for(let column = 0; column < board[row].length; ++column) {
+            if(oldBoard[row][column] && getNumberOfNeighbors(oldBoard, row, column) < 2) board[row][column] = false;
+            else if(oldBoard[row][column] && getNumberOfNeighbors(oldBoard, row, column) <= 3) board[row][column] = true;
+            else if(oldBoard[row][column] && getNumberOfNeighbors(oldBoard, row, column) > 3) board[row][column] = false;
+            else if(!oldBoard[row][column] && getNumberOfNeighbors(oldBoard, row, column) == 3) board[row][column] = true;
+        }
+    }
 }
+
+function drawBoard(board) {
+    clearCanvas(canvas, ctx);
+    for(let row = 0; row < board.length; ++row) {
+        for(let column = 0; column < board[row].length; ++column) {
+            if(board[row][column]) {
+                fillRect(ctx, column*UNIT_SIZE, row*UNIT_SIZE, UNIT_SIZE, UNIT_SIZE, "black");
+            }
+        }
+    }
+}
+
+let board = [];
+setBoard(board);
+
+let mouse = {x:0, y:0, mousedown:false};
+
+function setMousePosition(mouse, canvas, event) {
+    let rect = canvas.getBoundingClientRect();
+    mouse.x = event.clientX - rect.x;
+    mouse.y = event.clientY - rect.y
+}
+
+document.addEventListener("mousemove", (event) => {
+    setMousePosition(mouse, canvas, event);
+});
+
+canvas.addEventListener("mousedown", (event)=>{
+    mouse.mousedown = true;
+});
+
+canvas.addEventListener("mouseup", (event)=>{
+    mouse.mousedown = false;
+});
+
+// Configuring all the HTML elements
+let runButton = document.getElementById("run-button");
+let stepButton = document.getElementById("step-button");
+let clearButton = document.getElementById("clear-button");
+let randomizeButton = document.getElementById("randomize-button");
+let updatesPerSecondSlider = document.getElementById("ups-slider");
+let updatesPerSecondNumber = document.getElementById("ups-number");
+let brushSizeSlider = document.getElementById("brush-size-slider");
+let brushSizeNumber = document.getElementById("brush-size-number");
+
+
+runButton.onclick = () => {
+    if(settings.gameRunning) {
+        runButton.innerHTML = "Run";
+    } else {
+        runButton.innerHTML = "Pause";
+    }
+    settings.gameRunning = !settings.gameRunning;
+};
 
 stepButton.onclick = () => {
-    lifeCycle();
+    lifeCycle(board);
+    drawBoard(board);
+};
+
+clearButton.onclick = () => {
+    for(let row = 0; row < board.length; ++row) {
+        for(let column = 0; column < board[row].length; ++column) {
+            board[row][column] = false;
+        }
+    }
+    drawBoard(board);
 }
 
-let timeInterval = window.setInterval(()=>{
-    if(gameRunning) {
-        lifeCycle();
+randomizeButton.onclick = () => {
+    for(let row = 0; row < board.length; ++row) {
+        for(let column = 0; column < board[row].length; ++column) {
+            let randomNumber = Math.floor(Math.random() * 2);
+            if(randomNumber == 0) board[row][column] = false;
+            else if(randomNumber == 1) board[row][column] = true;
+        }
     }
-}, 1000/settings.updatesPerSecond);
+    drawBoard(board);
+}
+
+updatesPerSecondSlider.value = settings.updatesPerSecond;
+updatesPerSecondNumber.innerHTML = "Updates Per Second: " + updatesPerSecondSlider.value;
+updatesPerSecondSlider.oninput = () => {
+    updatesPerSecondNumber.innerHTML = "Updates Per Second: " + updatesPerSecondSlider.value;
+    settings.updatesPerSecond = updatesPerSecondSlider.value;
+};
+
+brushSizeSlider.value = settings.brushSize;
+brushSizeNumber.innerHTML = "Brush Size: " + brushSizeSlider.value;
+brushSizeSlider.oninput = () => {
+    brushSizeNumber.innerHTML = "Brush Size: " + brushSizeSlider.value;
+    settings.brushSize = brushSizeSlider.value;
+};
+
+function paint(x, y, brushSize) {
+    let oddSize = brushSize % 2 == 1;
+    let start = Math.floor(oddSize ? brushSize / 2 : brushSize / 2 - 1);
+    let end = Math.floor(brushSize / 2);
+    for (let i = x - start; i <= x + end; i++) {
+        for (let j = y - start; j <= y + end; j++) {
+            if (i >= 0 && i < canvas.width && j >= 0 && j < canvas.height) {
+                board[i][j] = true;
+            }
+        }
+    }
+}
+
+window.setInterval(() => {
+    if(mouse.mousedown) {
+        let row = Math.floor(mouse.y / UNIT_SIZE);
+        let col = Math.floor(mouse.x / UNIT_SIZE);
+        paint(row, col, settings.brushSize);
+        drawBoard(board);
+    }
+}, 1);
+
+function gameLoop() {
+    if(settings.gameRunning) {
+        drawBoard(board);
+        lifeCycle(board);
+    }
+
+    setTimeout(() => {
+        requestAnimationFrame(gameLoop);
+    }, 1000/settings.updatesPerSecond);
+}
+
+gameLoop();
