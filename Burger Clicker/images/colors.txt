@@ -1,5 +1,0 @@
-Bun - 255, 148, 0
-Bun Shading - 234, 135, 0
-
-Patty - 204, 119, 0
-Sesame Seeds - 255, 233, 204

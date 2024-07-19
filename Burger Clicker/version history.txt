@@ -1,3 +1,0 @@
-12-31-2021 v1.0 - Base Game
-    -I had too many ideas of what to add so I just coded the base game as to finish it before 2022
-    -The store is not very balanced right now and the UI is kind of ugly; I'll fix it when I add new things to the game

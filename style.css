@@ -1,118 +1,253 @@
-* {
-    margin: 0;
+body {
+    font-family: Arial, sans-serif;
+}
+
+nav {
+    background-color: #e4e4e4;
+    width: 20%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    position: fixed;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+#small-nav{
+    visibility: hidden;
+    display: none;
+    font-size: 1px;
+}
+
+ul {
     padding: 0;
 }
 
-body {
-    background-color: rgb(220, 220, 250);
-    font-family: Arial, Helvetica, sans-serif;
-    line-height: normal;
+li {
+    list-style-type: none;
+    font-size: 24px;
+    margin: 1em;
 }
 
-/* Prevents bluriness when rescaling an image */
-img {
-    image-rendering: pixelated;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: crisp-edges;
+a, a:visited, a:hover, a:active {
+    text-decoration: none;
+    color: inherit;
 }
 
-#navbar {
+nav .nav-title {
+    font-weight: bold;
+}
+
+nav .nav-jump {
+    font-size: 20px;
+}
+
+.content {
+    margin-left: 22%;
+}
+
+#this-is-sudan, #donate, #timeline, #articles-title {
+    text-align: center;
+}
+
+.slideshow, .slideshow img {
+    width: 100%;
+}
+
+.slideshow p {
+    text-align: left;
+    border: 3px solid black;
+    margin-top: 0;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 2%;
+    background-color: rgb(230, 230, 230);
+}
+
+#stats {
     display: flex;
-    margin: 1%;
     justify-content: space-evenly;
+}
+
+#stats span {
+    border: 3px solid black;
+    padding: 1%;
+    background-color: rgb(230, 230, 230);
+}
+
+#stats .num {
+    text-align: center;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.articles-outline a {
+    display: grid;
+    grid-template: repeat(2, 1fr) / repeat(5, 1fr);
     align-items: center;
     border: 3px solid black;
-    border-radius: 2em;
-    background-color: rgba(161, 241, 252, 0.4);
+    background-color: rgb(230, 230, 230);
 }
 
-#navbar #logo {
-    transition: ease-in-out .5s;
+.articles-outline img {
+    grid-row: 1 / -1;
+    grid-column: 1 / 2;
+    padding: 5px;
+    width: 90%;
 }
 
-#navbar #logo:hover {
-    cursor: pointer;
+.articles-outline .article-title {
+    grid-row: 1 / 2;
+    grid-column: 2 / -1;
+    font-size: 24px;
+    font-weight: bold;
 }
 
-#navbar img {
-    width: 100px;
-    height: 100px;
+.articles-outline .article-description {
+    grid-row: 2 / -1;
+    grid-column: 2 / -1;
 }
 
-#navbar .nav-selections {
-    color: black;
-    /* margin-left: 15%;
-    margin-right: 15%; */
-    font-size: 35px;
-    transition: ease-in-out .15s;
-}
-
-a {
-    text-decoration: none;
-    color: darkblue;
-}
-
-a:visited {
-    color: darkblue;
-}
-
-#navbar a:hover {
-    color: rgb(255, 255, 255);
-}
-
-#games-container {
+#donation-organization a {
     display: grid;
-    width: 80%;
-    grid-template-columns: repeat(4, 1fr);
-    align-content: center;
-    margin: auto;
+    grid-template: repeat(2, 1fr) / repeat(4, 1fr);
+    align-items: center;
+    border: 1px solid black;
 }
 
-.game {
-    margin: 5%;
-    padding: 5%;
-    min-width: 33%;
+#donation-organization img {
+    grid-row: 1 / -1;
+    grid-column: 1 / 3;
+    padding: 5px;
+    width: 95%;
+    height: 95%;
+}
+
+#donation-organization .org-title {
+    grid-row: 1 / 2;
+    grid-column: 3 / -1;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+#donation-organization .org-description {
+    grid-row: 2 / -1;
+    grid-column: 3 / -1;
+}
+
+button {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 100px;
+}
+
+#other-org-imgs {
+    display: grid;
+    grid-template: repeat(2, 1fr) / repeat(3, 1fr);
+    justify-items: center;
+    align-items: center;
+    grid-gap: 5px;
+}
+
+#other-org-imgs img {
+    width: 75%;
+}
+
+#history-block, #current-block {
+    display: grid;
+    justify-content: space-evenly;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#history-block img, #current-block img {
+    width: 90%;
+}
+
+#citations-links a {
+    text-decoration: underline;
+}
+
+.articles-list a {
+    display: grid;
+    grid-template: repeat(1, 1fr) / repeat(5, 1fr);
+    align-items: center;
     border: 3px solid black;
-    border-radius: 1em;
-    transition: ease-in-out .25s;
+    background-color: rgb(230, 230, 230);
 }
 
-.game .game-icon {
-    width: 64px;
-    height: 64px;
+.articles-list img {
+    grid-row: 1 / -1;
+    grid-column: 1 / 2;
+    padding: 5px;
+    width: 90%;
 }
 
-.game .game-name {
-    font-size: 25px;
+.articles-list .article-title {
+    grid-row: 1 / -1;
+    grid-column: 2 / -1;
+    font-size: 24px;
+    font-weight: bold;
 }
 
-.game:hover {
-    background-color: rgb(185, 185, 255);
+#donate-button p {
+    text-align: center;
+    border: 1px solid black;
+    font-size: 36px;
 }
 
-#error-button {
-    color: rgb(220, 0, 0);
+#settings-container {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
 }
 
-#error-button:hover {
-    cursor: pointer;
-    background-color: rgba(220, 0, 0, 0.5);
+.settings {
+    text-align: center;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    font-size: 24px;
 }
 
-.news-container {
-    width: 80%;
-    margin: auto;
-    padding: 2%;
-    border: 3px solid black;
-    background-color: white;
-    border-radius: 1em;
+@media (max-width: 1050px) {
+    nav {
+        position: fixed;
+        width: 100%;
+        height: 20%;
+    }
+    nav ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: top;
+    }
+    li {
+        font-size: 16px;
+    }
+    .content {
+        margin-left: 0;
+        margin-top: 20%;
+    }
+    #main-navbar{
+        visibility: hidden;
+        display: none;
+        font-size: 1px;
+    }
+    #small-nav {
+        visibility: visible;
+        display: block;
+    }
 }
 
-.news-container ul {
-    list-style: none
-}
-
-.news-container a:hover {
-    transition: .10s;
-    color: Red;
+@media (max-width: 500px) {
+    li {
+        font-size: 8px;
+    }
+    .content {
+        margin-left: 0;
+        margin-top: 20%;
+    }
+    nav {
+        position: fixed;
+        width: 100%;
+        height: 20%;
+    }
 }
