@@ -1,0 +1,10 @@
+body {
+    text-align: center;
+    font-size: 48px;
+}
+
+button {
+    height: 25%;
+    font-size: 48px;
+    padding: 2%;
+}
