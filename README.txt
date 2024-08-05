@@ -1,2 +1,0 @@
-I added a button to change the theme of the website. You can switch between light mode and dark mode which brightens and darkers aspects of the website.
-I added a button that changes the font of all the text of the websites.
