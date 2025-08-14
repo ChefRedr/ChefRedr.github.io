@@ -17,7 +17,7 @@ const Header = () => {
     { name: 'Home', href: '#home' },
     { name: 'Experience', href: '#experience' },
     { name: 'Projects', href: '#projects' },
-    { name: 'Resume', href: '/src/assets/Resume - Faris Eltayib.pdf', target: '_blank' }
+    { name: 'Resume', href: 'https://github.com/ChefRedr/ChefRedr.github.io/blob/main/src/assets/Resume%20-%20Faris%20Eltayib.pdf', target: '_blank' }
   ]
 
   return (

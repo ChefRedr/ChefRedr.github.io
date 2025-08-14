@@ -8,7 +8,7 @@ const Hero = () => {
         <div className="hero-content">
           <div className="hero-text">
             <h1 className="hero-title">Hi, I'm Faris Eltayib</h1>
-            <h2 className="hero-subtitle">I'm 3rd-year undergraduate student studying computer science at Northwestern University</h2>
+            <h2 className="hero-subtitle">I'm a 3rd-year undergraduate student studying computer science at Northwestern University</h2>
             <div className="hero-social">
               <a href="mailto:fariseltayib@gmail.com" className="social-icon-link" aria-label="Email">
                 <svg className="social-icon" fill="currentColor" viewBox="0 0 24 24">
