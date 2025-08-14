@@ -33,8 +33,6 @@ portfolio/
 │   │   ├── About.jsx
 │   │   ├── Experience.jsx
 │   │   ├── Projects.jsx
-│   │   ├── Organizations.jsx
-│   │   ├── Contact.jsx
 │   │   └── Footer.jsx
 │   ├── App.jsx          # Main App component
 │   ├── App.css          # Global styles
@@ -138,10 +136,6 @@ Feel free to fork this project and customize it for your own portfolio. If you f
 
 ## 📞 Contact
 
-- **Email**: faris@example.com
-- **LinkedIn**: [Faris Eltayib](https://linkedin.com/in/fariseltayib)
-- **GitHub**: [fariseltayib](https://github.com/fariseltayib)
-
----
-
-Built with ❤️ using React & Vite
+- **Email**: fariseltayib@gmail.com
+- **LinkedIn**: [Faris Eltayib](https://linkedin.com/in/faris-eltayib)
+- **GitHub**: [fariseltayib](https://github.com/chefredr)
