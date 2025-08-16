@@ -50,7 +50,7 @@ const Experience = () => {
       name: 'Emerging Coders',
       role: 'Treasurer',
       period: 'Oct 2024 - Present',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+      description: 'Leading fundraising efforts to host technical workshops, networking events, and provide resources to help low-income students thrive in tech-related careers',
       technologies: ['Fundraising', 'Mentorship', 'Event Planning', 'Community Building'],
       type: 'organization',
       logo: emcoLogo
