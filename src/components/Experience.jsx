@@ -4,9 +4,19 @@ import northwesternLogo from '../assets/northwestern.png'
 import mltLogo from '../assets/mlt.jpg'
 import emcoLogo from '../assets/emco.jpeg'
 import mcsaLogo from '../assets/mcsa.png'
+import embLogo from '../assets/emb.jpeg'
 
 const Experience = () => {
   const experiences = [
+    {
+      title: 'Expert Medical Billing',
+      company: 'Software Engineering Intern',
+      period: 'Sept 2025 - Present',
+      description: 'Building a ReactJS client dashboard for healthcare providers to consolidate insurance and patient financial data with real-time updates, secure AWS database integration, data visualizations, and Slack-enabled messaging.',
+      technologies: ['ReactJS', 'AWS (S3, RDS, Lambda)', 'Socket.io', 'APIs'],
+      type: 'experience',
+      logo: embLogo
+    },
     {
       title: 'Mntrme',
       company: 'Software Engineering Intern',
@@ -64,7 +74,6 @@ const Experience = () => {
       type: 'organization',
       logo: northwesternLogo
     },
-    /*
     {
       name: 'Muslim-cultural Students Association',
       role: 'Admin Vice President',
@@ -74,7 +83,6 @@ const Experience = () => {
       type: 'organization',
       logo: mcsaLogo
     }
-    */
   ]
 
   // Create pairs of experiences and organizations
