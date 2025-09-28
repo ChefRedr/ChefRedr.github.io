@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMB Client Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>EMB Revenue Cycle Management</h1>
+                <div class="user-info">
+                    <span>Welcome, Client Manager</span>
+                    <button class="logout-btn">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="overview">Overview</button>
+            <button class="tab-btn" data-tab="data">Data</button>
+            <button class="tab-btn" data-tab="messaging">Messaging</button>
+            <button class="tab-btn" data-tab="clients">Client Management</button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content active">
+                <div class="overview-controls">
+                    <button id="addWidgetBtn" class="btn-primary">+ Add Widget</button>
+                    <button id="resetLayoutBtn" class="btn-secondary">Reset Layout</button>
+                </div>
+                <div class="dashboard-grid" id="dashboard-grid">
+                    <!-- Revenue Overview Widget -->
+                    <div class="widget" data-widget="revenue">
+                        <div class="widget-header">
+                            <h3>Monthly Revenue Overview</h3>
+                            <div class="widget-menu-container">
+                                <button class="widget-settings">⋮</button>
+                                <div class="widget-dropdown">
+                                    <a href="#" class="dropdown-item">Edit Widget</a>
+                                    <a href="#" class="dropdown-item">Duplicate</a>
+                                    <a href="#" class="dropdown-item">Remove</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-content">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Claims Status Widget -->
+                    <div class="widget" data-widget="claims">
+                        <div class="widget-header">
+                            <h3>Claims Status</h3>
+                            <div class="widget-menu-container">
+                                <button class="widget-settings">⋮</button>
+                                <div class="widget-dropdown">
+                                    <a href="#" class="dropdown-item">Edit Widget</a>
+                                    <a href="#" class="dropdown-item">Duplicate</a>
+                                    <a href="#" class="dropdown-item">Remove</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-content">
+                            <canvas id="claimsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Key Metrics Widget -->
+                    <div class="widget" data-widget="metrics">
+                        <div class="widget-header">
+                            <h3>Key Metrics</h3>
+                            <div class="widget-menu-container">
+                                <button class="widget-settings">⋮</button>
+                                <div class="widget-dropdown">
+                                    <a href="#" class="dropdown-item">Edit Widget</a>
+                                    <a href="#" class="dropdown-item">Duplicate</a>
+                                    <a href="#" class="dropdown-item">Remove</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-content">
+                            <div class="metrics-grid">
+                                <div class="metric-card">
+                                    <div class="metric-value" id="totalRevenue">$2,847,392</div>
+                                    <div class="metric-label">Total Revenue</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-value" id="totalClaims">1,247</div>
+                                    <div class="metric-label">Total Claims</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-value" id="avgProcessingTime">3.2</div>
+                                    <div class="metric-label">Avg Processing (days)</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-value" id="collectionRate">94.7%</div>
+                                    <div class="metric-label">Collection Rate</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Client Performance Widget -->
+                    <div class="widget" data-widget="clients">
+                        <div class="widget-header">
+                            <h3>Client Performance</h3>
+                            <div class="widget-menu-container">
+                                <button class="widget-settings">⋮</button>
+                                <div class="widget-dropdown">
+                                    <a href="#" class="dropdown-item">Edit Widget</a>
+                                    <a href="#" class="dropdown-item">Duplicate</a>
+                                    <a href="#" class="dropdown-item">Remove</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-content">
+                            <canvas id="clientPerformanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Tab -->
+            <div id="data" class="tab-content">
+                <div class="data-controls">
+                    <select id="clientFilter" class="filter-select">
+                        <option value="all">All Clients</option>
+                    </select>
+                    <select id="dateFilter" class="filter-select">
+                        <option value="current">Current Month</option>
+                        <option value="last">Last Month</option>
+                        <option value="quarter">This Quarter</option>
+                        <option value="year">This Year</option>
+                    </select>
+                    <button id="addClaimBtn" class="btn-primary">+ Add Claim</button>
+                </div>
+                
+                <div class="data-grid">
+                    <!-- Claims Data Table -->
+                    <div class="data-section">
+                        <h3>Insurance Claims Data</h3>
+                        <div class="table-container">
+                            <table id="claimsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Claim ID</th>
+                                        <th>Client</th>
+                                        <th>Patient</th>
+                                        <th>Procedure</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Date Submitted</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="claimsTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Patient Data Table -->
+                    <div class="data-section">
+                        <h3>Patient Information</h3>
+                        <div class="table-container">
+                            <table id="patientsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Patient ID</th>
+                                        <th>Name</th>
+                                        <th>DOB</th>
+                                        <th>Insurance</th>
+                                        <th>Primary Care</th>
+                                        <th>Last Visit</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="patientsTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Financial Summary -->
+                    <div class="data-section">
+                        <h3>Financial Summary</h3>
+                        <div class="financial-grid">
+                            <div class="financial-card">
+                                <h4>Total Billed</h4>
+                                <div class="amount">$3,247,892</div>
+                            </div>
+                            <div class="financial-card">
+                                <h4>Collected</h4>
+                                <div class="amount">$2,847,392</div>
+                            </div>
+                            <div class="financial-card">
+                                <h4>Outstanding</h4>
+                                <div class="amount">$400,500</div>
+                            </div>
+                            <div class="financial-card">
+                                <h4>Write-offs</h4>
+                                <div class="amount">$45,230</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messaging Tab -->
+            <div id="messaging" class="tab-content">
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <h3>EMB Support Chat</h3>
+                        <div class="chat-status">
+                            <span class="status-indicator online"></span>
+                            <span>Online</span>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message system">
+                            <div class="message-content">
+                                Welcome to EMB Support! How can we help you today?
+                            </div>
+                            <div class="message-time">10:30 AM</div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-container">
+                        <input type="text" id="chatInput" placeholder="Type your message..." />
+                        <button id="sendMessageBtn">Send</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Client Management Tab -->
+            <div id="clients" class="tab-content">
+                <div class="client-management">
+                    <div class="client-header">
+                        <h3>Client Management</h3>
+                        <button id="addClientBtn" class="btn-primary">Add New Client</button>
+                    </div>
+                    
+                    <div class="clients-grid" id="clientsGrid">
+                        <!-- Client cards will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Client Modal -->
+    <div id="addClientModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Client</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="addClientForm">
+                    <div class="form-group">
+                        <label for="clientName">Practice Name:</label>
+                        <input type="text" id="clientName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientAddress">Address:</label>
+                        <input type="text" id="clientAddress" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientPhone">Phone:</label>
+                        <input type="tel" id="clientPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientEmail">Email:</label>
+                        <input type="email" id="clientEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="providerCount">Number of Providers:</label>
+                        <input type="number" id="providerCount" min="1" max="8" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancelAddClient">Cancel</button>
+                        <button type="submit" class="btn-primary">Add Client</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Widget Modal -->
+    <div id="addWidgetModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Widget</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="addWidgetForm">
+                    <div class="form-group">
+                        <label for="widgetType">Widget Type:</label>
+                        <select id="widgetType" required>
+                            <option value="">Select Widget Type</option>
+                            <option value="patient-demographics">Patient Demographics</option>
+                            <option value="insurance-breakdown">Insurance Breakdown</option>
+                            <option value="monthly-comparison">Monthly Comparison</option>
+                            <option value="denial-reasons">Denial Reasons</option>
+                            <option value="provider-performance">Provider Performance</option>
+                            <option value="payment-trends">Payment Trends</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="widgetTitle">Widget Title:</label>
+                        <input type="text" id="widgetTitle" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancelAddWidget">Cancel</button>
+                        <button type="submit" class="btn-primary">Add Widget</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Claim Modal -->
+    <div id="addClaimModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Claim</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="addClaimForm">
+                    <div class="form-group">
+                        <label for="claimClient">Client:</label>
+                        <select id="claimClient" required>
+                            <option value="">Select Client</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="claimPatient">Patient Name:</label>
+                        <input type="text" id="claimPatient" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="claimProcedure">Procedure:</label>
+                        <input type="text" id="claimProcedure" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="claimAmount">Amount ($):</label>
+                        <input type="number" id="claimAmount" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="claimInsurance">Insurance:</label>
+                        <select id="claimInsurance" required>
+                            <option value="">Select Insurance</option>
+                            <option value="Blue Cross Blue Shield">Blue Cross Blue Shield</option>
+                            <option value="Aetna">Aetna</option>
+                            <option value="UnitedHealth">UnitedHealth</option>
+                            <option value="Cigna">Cigna</option>
+                            <option value="Medicare">Medicare</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="claimStatus">Status:</label>
+                        <select id="claimStatus" required>
+                            <option value="Pending">Pending</option>
+                            <option value="Paid">Paid</option>
+                            <option value="Denied">Denied</option>
+                            <option value="Under Review">Under Review</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancelAddClaim">Cancel</button>
+                        <button type="submit" class="btn-primary">Add Claim</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
