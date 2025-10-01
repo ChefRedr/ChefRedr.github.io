@@ -17,8 +17,7 @@ const Header = () => {
     { name: 'Home', href: '#home' },
     { name: 'Experience', href: '#experience' },
     { name: 'Projects', href: '#projects' },
-    { name: 'Resume', href: '/faris_eltayib_resume.pdf', target: '_blank' },
-    { name: 'EMB Demo', href: '/EMB/index.html', target: '_blank' }
+    { name: 'Resume', href: '/faris_eltayib_resume.pdf', target: '_blank' }
   ]
 
   return (
