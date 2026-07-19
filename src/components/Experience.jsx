@@ -5,13 +5,23 @@ import mltLogo from '../assets/mlt.jpg'
 import emcoLogo from '../assets/emco.jpeg'
 import mcsaLogo from '../assets/mcsa.png'
 import embLogo from '../assets/emb.jpeg'
+import googleLogo from '../assets/google.jpeg'
 
 const Experience = () => {
   const experiences = [
     {
+      title: 'Google',
+      company: 'Software Engineering Intern',
+      period: 'Jun 2026 - Sep 2026',
+      description: 'Android @ Youtube Youth',
+      technologies: ['Java', 'Kotlin', 'Android SDK', ],
+      type: 'experience',
+      logo: googleLogo
+    },
+    {
       title: 'Expert Medical Billing',
       company: 'Technical Program Manager Intern',
-      period: 'Sept 2025 - Present',
+      period: 'Sep 2025 - Mar 2026',
       description: 'Building a ReactJS client dashboard for healthcare providers to consolidate insurance and patient financial data with real-time updates, secure AWS database integration, data visualizations, and Slack-enabled messaging.',
       technologies: ['ReactJS', 'AWS (S3, RDS, Cognito)','AWS (API Getaway, Lambda)', 'Socket.io', 'APIs'],
       type: 'experience',
